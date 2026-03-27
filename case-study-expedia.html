@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When the TV Went Dark — Expedia Group | Jo Donohue</title>
+  <meta name="description" content="Case study: Building a real-time TV attribution system and funnel monitoring for Expedia Group's $100M+ ad budget.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">Jo Donohue</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#about">About</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#writing">Writing</a>
+      <a href="index.html#creative">Creative</a>
+      <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="cs-page-hero">
+  <div class="container">
+    <span class="section-label fade-in">Expedia Group — Global Brand</span>
+    <h1 class="section-title fade-in">When the TV<br><em>Went Dark</em></h1>
+    <div class="cs-page-meta fade-in">
+      <div class="cs-page-meta-item">
+        <strong>Role</strong>
+        Senior Brand Analyst
+      </div>
+      <div class="cs-page-meta-item">
+        <strong>Scope</strong>
+        Global TV advertising attribution &amp; in-house media buying
+      </div>
+      <div class="cs-page-meta-item">
+        <strong>Budget</strong>
+        $100M+ annually
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Banner -->
+<div class="cs-page-banner">
+  <span class="cs-page-banner-text">Expedia Group</span>
+</div>
+
+<!-- Content -->
+<div class="container">
+  <div class="cs-page-content">
+
+    <h2 class="fade-in">The Problem</h2>
+    <p class="fade-in">
+      Two parallel problems, both with the same root cause: the company was flying blind on what consumers actually experienced.
+    </p>
+    <p class="fade-in">
+      First, non-working capital — agency fees, middlemen — consumed roughly 30% of the TV advertising budget. The Global Brand Director set a challenge: bring media buying in-house. But that required answering a question no one could: what creative, on what network, in what daypart actually drives travelers to book?
+    </p>
+    <p class="fade-in">
+      Second, weekly product releases were silently breaking the checkout funnel and costing the company millions in lost bookings before anyone caught them. Engineering shipped fast, but no one was watching what happened to real users after each deploy.
+    </p>
+
+    <h2 class="fade-in">The Approach</h2>
+
+    <h3 class="fade-in">The Attribution Pipeline</h3>
+    <p class="fade-in">
+      Built a data pipeline from TVSquared (TV attribution vendor) into Expedia's data warehouse, and created a prototype media buying optimization system for in-house media managers. Worked directly with the IT POD manager through requirements definition, whiteboard sessions, custom classification logic, and end-user testing.
+    </p>
+    <p class="fade-in">
+      The pipeline translated raw TV airing signals into network/daypart/performance data that media managers could act on — replacing a monthly cycle of agency-mediated reporting with a weekly feedback loop the team owned directly.
+    </p>
+
+    <h3 class="fade-in">The Funnel Monitoring System</h3>
+    <p class="fade-in">
+      Part of a rotating initiative supporting product and engineering. Built a daily Omniture (Adobe Analytics) pull that scanned for meaningful deviations in traffic patterns, formed hypotheses, and segmented by browser, device, credit card type, and web vs. mobile. Presented findings at daily engineering/product standup triage sessions.
+    </p>
+    <p class="fade-in">
+      The goal was simple: catch conversion-killing bugs before they compounded. The discipline was in doing it every single day and building the muscle memory for the engineering team to act fast when something surfaced.
+    </p>
+
+    <h2 class="fade-in">The Outcome</h2>
+
+    <div class="cs-outcomes fade-in">
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">Monthly → Weekly</div>
+        <div class="cs-outcome-label">Compressed TV reporting cycle — faster creative feedback, faster spend reallocation</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">30%</div>
+        <div class="cs-outcome-label">Directional progress toward reducing non-working capital overhead</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">70%</div>
+        <div class="cs-outcome-label">Conversion issues from engineering releases identified within 48 hours</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">Higher confidence</div>
+        <div class="cs-outcome-label">Shorter outages, better traveler retention, stronger shipping cadence</div>
+      </div>
+    </div>
+
+    <p class="fade-in">
+      The attribution pipeline gave the brand team something they'd never had: ownership of the data that justified their largest line item. The funnel monitoring created a safety net that let product and engineering ship faster without the silent cost of undetected conversion drops. Together, they represented a shift from reactive reporting to proactive intelligence.
+    </p>
+
+    <a href="index.html#work" class="cs-back fade-in">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to all work
+    </a>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-logo">Jo Donohue</span>
+    <span class="footer-copy">&copy; 2026 Jo Donohue. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>

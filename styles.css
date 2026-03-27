@@ -4,7 +4,7 @@
    serif, black contrast, editorial overlapping imagery
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500&display=swap');
 
 /* ---------- Tokens ---------- */
 :root {
@@ -155,130 +155,53 @@ ul { list-style: none; }
 }
 
 /* ===================================================================
-   HERO — Massive script + overlapping photos (Ember-style)
+   HERO
    =================================================================== */
 .hero {
-  position: relative;
   min-height: 100vh;
-  background: var(--white);
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  padding: 120px 0 80px;
+  position: relative;
 }
 
-/* Giant script name — full-bleed behind/around photos */
-.hero-name-wrap {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 80px 0 0;
-  pointer-events: none;
-  user-select: none;
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: center;
 }
-.hero-name-script {
-  font-family: 'Pinyon Script', cursive;
-  font-size: clamp(14vw, 18vw, 260px);
-  line-height: 0.85;
-  color: var(--black);
-  display: block;
-  white-space: nowrap;
-  letter-spacing: -0.01em;
-}
-.hero-name-surname {
+
+/* --- Hero typography --- */
+.hero-text { max-width: 620px; }
+
+.hero-title {
   font-family: var(--serif);
-  font-size: clamp(3vw, 4.5vw, 64px);
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
   font-weight: 300;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   color: var(--black);
-  display: block;
-  margin-top: -0.5rem;
+  margin-bottom: 2rem;
+}
+.hero-title em {
+  font-style: italic;
+  font-weight: 400;
 }
 
-/* Scattered photos — absolute over the text */
-.hero-photos {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-.hero-photo {
-  position: absolute;
-  overflow: hidden;
-}
-.hero-photo img,
-.hero-photo-placeholder {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.hero-photo-placeholder {
-  background: #D0CBC2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.hero-subtitle {
   font-family: var(--sans);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.6);
-  text-align: center;
-  padding: 0.75rem;
-}
-
-/* Position each photo — mirroring the Ember layout */
-.hero-photo-1 {
-  width: clamp(140px, 14vw, 200px);
-  height: clamp(180px, 22vw, 280px);
-  top: 5%;
-  left: 24%;
-  z-index: 3;
-}
-.hero-photo-2 {
-  width: clamp(110px, 11vw, 160px);
-  height: clamp(140px, 17vw, 220px);
-  top: 4%;
-  right: 7%;
-  z-index: 3;
-}
-.hero-photo-3 {
-  width: clamp(110px, 12vw, 170px);
-  height: clamp(160px, 20vw, 260px);
-  top: 28%;
-  left: 5%;
-  z-index: 4;
-}
-.hero-photo-4 {
-  width: clamp(110px, 12vw, 170px);
-  height: clamp(110px, 14vw, 190px);
-  top: 26%;
-  left: 52%;
-  z-index: 4;
-}
-
-/* Hero tagline below name */
-.hero-footer {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2.5rem var(--gutter) 3rem;
-  margin-top: auto;
-}
-.hero-tagline {
-  font-family: var(--sans);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 300;
   color: var(--grey);
-  letter-spacing: 0.05em;
-  max-width: 320px;
-  line-height: 1.7;
+  line-height: 1.8;
+  max-width: 440px;
+  margin-bottom: 2.5rem;
 }
+
 .hero-actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
@@ -288,7 +211,7 @@ ul { list-style: none; }
   align-items: center;
   gap: 0.6rem;
   background: var(--black);
-  color: var(--white);
+  color: var(--cream);
   padding: 0.9rem 2rem;
   font-family: var(--sans);
   font-size: 0.75rem;
@@ -320,6 +243,60 @@ ul { list-style: none; }
   transition: border-color 0.3s ease;
 }
 .btn-outline:hover { border-color: var(--black); }
+
+/* --- Hero image collage --- */
+.hero-visual {
+  position: relative;
+  height: 520px;
+}
+
+.hero-img {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.hero-img img,
+.hero-img-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Three overlapping images, editorial style */
+.hero-img-1 {
+  width: 55%;
+  height: 75%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.hero-img-2 {
+  width: 48%;
+  height: 55%;
+  top: 10%;
+  right: 0;
+  z-index: 1;
+}
+.hero-img-3 {
+  width: 40%;
+  height: 45%;
+  bottom: 0;
+  left: 30%;
+  z-index: 3;
+}
+
+.hero-img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--grey-light);
+  text-align: center;
+  padding: 1rem;
+}
+.hero-img-1 .hero-img-placeholder { background: #D8D3CA; }
+.hero-img-2 .hero-img-placeholder { background: #C8C3BA; }
+.hero-img-3 .hero-img-placeholder { background: #E0DDD6; }
 
 /* ===================================================================
    STATS RIBBON — black bar like Modern Muses
@@ -881,17 +858,17 @@ ul { list-style: none; }
    RESPONSIVE
    =================================================================== */
 @media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .hero-visual { height: 400px; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .hero-photo-1 { left: 20%; }
-  .hero-photo-2 { right: 4%; }
 }
 
 @media (max-width: 768px) {
-  .hero-name-script { font-size: 22vw; }
-  .hero-name-surname { font-size: 5vw; letter-spacing: 0.25em; }
-  .hero-photo-4 { display: none; }
-  .hero-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
-  .hero-tagline { max-width: 100%; }
+  .hero-title { font-size: clamp(2.5rem, 9vw, 3.5rem); }
+  .hero-visual { height: 320px; }
 
   .case-study-cards { grid-template-columns: 1fr; }
   .writing-grid { grid-template-columns: 1fr; }
@@ -922,11 +899,13 @@ ul { list-style: none; }
   }
   .nav-toggle { display: flex; }
 
-  .hero-name-script { font-size: 26vw; }
-  .hero-photo-3 { display: none; }
-  .hero-photo-1 { left: 18%; }
-
+  .hero-actions { flex-direction: column; align-items: stretch; }
   .btn-dark, .btn-outline { justify-content: center; }
+  .hero-visual { height: 280px; }
+  .hero-img-3 { display: none; }
+  .hero-img-1 { width: 60%; height: 100%; }
+  .hero-img-2 { width: 45%; height: 70%; top: 15%; }
+
   .contact-links { flex-direction: column; align-items: center; }
   .cs-page-meta { gap: 1.5rem; }
   .cs-page-banner { height: 200px; }

@@ -636,7 +636,7 @@ ul { list-style: none; }
   font-weight: 400;
   color: var(--black);
   letter-spacing: 0.02em;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .contact-links {

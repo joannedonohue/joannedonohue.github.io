@@ -425,6 +425,11 @@ ul { list-style: none; }
   align-items: center;
   justify-content: center;
 }
+.cs-card-banner--photo {
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+}
 .cs-card-banner.mars {
   background: var(--black);
 }

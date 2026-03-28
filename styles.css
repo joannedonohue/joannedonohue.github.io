@@ -628,7 +628,15 @@ ul { list-style: none; }
   font-weight: 300;
   color: var(--grey);
   line-height: 1.8;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
+}
+.contact-email {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--black);
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
 }
 
 .contact-links {

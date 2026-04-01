@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Chaos to Craft — Mars Petcare | Joanne Donohue</title>
+  <meta name="description" content="Case study: Building a data culture and analytics infrastructure that drove $10M over plan at Mars Petcare.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">Joanne Donohue</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#about">About</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#writing">Writing</a>
+      <a href="index.html#creative">Creative</a>
+      <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="cs-page-hero">
+  <div class="container">
+    <span class="section-label fade-in">Mars Petcare — Greenies, Nutro, Royal Canin</span>
+    <h1 class="section-title fade-in">From Chaos<br>to <em>Craft</em></h1>
+    <div class="cs-page-meta fade-in">
+      <div class="cs-page-meta-item">
+        <strong>Role</strong>
+        Senior eCommerce Product Manager
+      </div>
+      <div class="cs-page-meta-item">
+        <strong>Scope</strong>
+        Amazon &amp; multi-retailer eCommerce — North America
+      </div>
+      <div class="cs-page-meta-item">
+        <strong>Impact</strong>
+        $10M over annual sales plan
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Banner -->
+<div class="cs-page-banner">
+  <span class="cs-page-banner-text">Mars Petcare</span>
+</div>
+
+<!-- Content -->
+<div class="container">
+  <div class="cs-page-content">
+
+    <h2 class="fade-in">The Problem</h2>
+    <p class="fade-in">
+      No benchmarks, no consistent measurement, no way to know if marketing creative was actually working. Sales teams toggled between a dozen disconnected tools to answer basic business questions — figuring out whether Greenies Dental Chews had a bad week required pulling three separate reports and doing the math by hand.
+    </p>
+    <p class="fade-in">
+      The eCommerce organization was flying blind. Decisions about creative spend, promotional timing, and content optimization were based on gut feel rather than data. And with brands like Greenies, Nutro, and Royal Canin all sharing the same fragmented infrastructure, there was no single source of truth.
+    </p>
+
+    <h2 class="fade-in">The Approach</h2>
+
+    <h3 class="fade-in">Track 1 — Analytics Infrastructure</h3>
+    <p class="fade-in">
+      Led a cross-functional tiger team to consolidate reporting. Interviewed sales teams about real decisions and pain points. Designed a structured evaluation framework across five shortlisted eCommerce analytics platforms. Selected Stackline and worked directly with their engineering team on integration. Ran interactive training sessions to drive adoption and overcome Excel muscle memory.
+    </p>
+
+    <h3 class="fade-in">Track 2 — Test-and-Learn Roadmap</h3>
+    <p class="fade-in">
+      Developed the first structured testing roadmap Mars eCommerce had ever had — clear milestones and measurable hypotheses for the marketing agency. Early tests established baselines for each marketing lever: search, display, and promotions. Later tests built on those learnings, progressively tightening targeting and timing.
+    </p>
+    <p class="fade-in">
+      The critical insight: heavy promotional advertising consistently underperformed always-on retargeting. That single finding, backed by rigorous incrementality analysis, redirected millions in spend.
+    </p>
+
+    <h2 class="fade-in">The Outcome</h2>
+
+    <div class="cs-outcomes fade-in">
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">$10M</div>
+        <div class="cs-outcome-label">Exceeded annual sales plan in 2019</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">5–15%</div>
+        <div class="cs-outcome-label">PDP conversion improvement through iterative content optimization</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">Enterprise-wide</div>
+        <div class="cs-outcome-label">Consolidated reporting across Chewy, Walmart, and Amazon for the first time</div>
+      </div>
+      <div class="cs-outcome">
+        <div class="cs-outcome-value">Global</div>
+        <div class="cs-outcome-label">Test-and-learn approach spread from Amazon team to Mars worldwide</div>
+      </div>
+    </div>
+
+    <p class="fade-in">
+      The budget shift from heavy promotional to always-on retargeting drove millions in incremental sales. But the longer-lasting impact was cultural: for the first time, the Mars eCommerce organization had a shared language for evaluating what was working, a system for learning from what wasn't, and the confidence to make bold spend decisions backed by data.
+    </p>
+
+    <a href="index.html#work" class="cs-back fade-in">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to all work
+    </a>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-logo">Joanne Donohue</span>
+    <span class="footer-copy">&copy; 2026 Joanne Donohue. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>

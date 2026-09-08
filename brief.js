@@ -1,0 +1,14 @@
+function prioritize({traffic,conversion,stock,returns}) {
+ if(stock < 14) return ['Check replenishment before accelerating demand.', `${stock} days of stock may leave little room for supplier delays. Confirm lead time and committed inventory before increasing acquisition spend.`, 'Supplier lead time, SKU-level stock, and scheduled receipts.', 'Stock under 14 days is evaluated first. A signal to investigate, not an automatic purchasing decision.'];
+ if(returns > 10) return ['Investigate why orders are coming back.', `A ${returns}% return rate deserves a closer look at reasons and affected products. Check whether product information, fit, or quality is contributing before buying more traffic.`, 'Return reasons, category baselines, sample size, and product-level margins.', 'Return rate above 10% is the second illustrative rule. Categories vary; this is not an industry benchmark.'];
+ if(traffic < 1000) return ['Gather more evidence before optimizing.', `${traffic} monthly sessions may leave little evidence for a reliable conversion experiment. Review qualitative customer feedback and traffic quality before making a broad change.`, 'Channel mix, number of orders, customer interviews, and the effect size needed for a test.', 'Traffic below 1,000 sessions is an illustrative caution flag, not a statistical power calculation.'];
+ if(conversion < 2) return ['Find the friction before changing the offer.', `At ${conversion}% conversion, investigate the path from product view to purchase. Segment by device and traffic source before deciding whether the issue is the offer, audience, or checkout.`, 'Funnel drop-off, channel and device mix, page performance, and a relevant baseline.', 'Conversion below 2% prompts investigation. It is not a universal target or proof of a checkout problem.'];
+ return ['Protect the baseline. Choose a measured test.', 'These inputs do not trigger the prototype’s risk flags. Identify one customer friction point and test a focused improvement rather than assuming the store has no problems.', 'Contribution margin, customer feedback, cohort performance, and seasonality.', 'No triggered rule does not mean no risk. This prototype has only four inputs.'];
+}
+document.querySelector('#brief-form').addEventListener('submit', event => {
+ event.preventDefault(); const form=event.currentTarget;if(!form.reportValidity())return;
+ const values=Object.fromEntries(['traffic','conversion','stock','returns'].map(id=>[id,Number(document.getElementById(id).value)]));
+ const [title,description,missing,rule]=prioritize(values);const target=document.querySelector('#brief-result');
+ target.replaceChildren();
+ for(const [tag,text] of [['p','YOUR NEXT INVESTIGATION'],['h3',title],['p',description],['p','Missing evidence: '+missing],['small',rule]]) { const el=document.createElement(tag);el.textContent=text;target.appendChild(el); }
+});

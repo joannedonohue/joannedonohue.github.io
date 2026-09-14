@@ -2,7 +2,7 @@
 .community-intro{background:#c8daaa;position:relative;isolation:isolate;overflow:hidden}
 .community-intro>:not(canvas){position:relative;z-index:1}
 .community-intro h1{ text-shadow:0 0 18px #c8daaa,0 0 8px #c8daaa}
-.community-intro .bloom-canvas{position:absolute;right:0;top:0;width:52%;height:100%;pointer-events:none;mask-image:linear-gradient(to right,transparent,#000 26%);-webkit-mask-image:linear-gradient(to right,transparent,#000 26%)}
+.community-intro .bloom-canvas{position:absolute;right:-2%;top:0;width:58%;height:100%;pointer-events:none;mask-image:linear-gradient(to right,transparent,#000 26%);-webkit-mask-image:linear-gradient(to right,transparent,#000 26%)}
 .community-intro .bloom-motion{position:absolute;right:6%;bottom:20px;width:38px;height:38px;display:grid;place-items:center;border:1px solid #554a3838;border-radius:50%;background:transparent;color:#514636;cursor:pointer}
 .bloom-motion:hover{background:#ffffff38}.bloom-motion:focus-visible{outline:2px solid #796023;outline-offset:4px}
 @media(max-width:650px){.community-intro .bloom-canvas{width:100%;opacity:.38;right:-16%}}
@@ -57,16 +57,19 @@
 const root=document.querySelector('.community-intro'),canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d'),button=root.querySelector('.bloom-motion');
 if(!ctx){button.hidden=true;return;}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');let paused=reduced.matches,visible=true,w=1,h=1,t=5,last=0,raf=0;
-function point(x,y,z){const angle=.28+Math.sin(t*.12)*.12,xx=x*Math.cos(angle)+z*Math.sin(angle),zz=-x*Math.sin(angle)+z*Math.cos(angle),scale=Math.min(w/440,h/440);return [w*.58+xx*scale,h*.57+(-y*.86+zz*.5)*scale];}
-function line(points,alpha=.36,gold=true){ctx.beginPath();points.forEach((p,i)=>{const q=point(...p);i?ctx.lineTo(...q):ctx.moveTo(...q);});ctx.strokeStyle=gold?'rgba(161,116,40,'+alpha+')':'rgba(78,83,62,'+alpha+')';ctx.lineWidth=.65;ctx.stroke();}
-function petal(u,v,a,layer,open){const len=layer?133:165,bend=(layer?.72:1)*open;const r=10+len*(Math.sin(u*bend*1.5))*.95,side=Math.sin(Math.PI*u)*Math.sin(v*Math.PI/2)*(layer?36:49);const y=6+len*u*(1-.64*bend)+28*Math.sin(Math.PI*u)-Math.pow(Math.abs(v),2)*18*Math.sin(Math.PI*u);return [Math.cos(a)*r-Math.sin(a)*side,y,Math.sin(a)*r+Math.cos(a)*side];}
-function draw(){ctx.clearRect(0,0,w,h);const open=.2+.8*(.5-.5*Math.cos(t*.38));for(let k=0;k<5;k++){const path=[];for(let i=0;i<=30;i++){const u=i/30;path.push([Math.sin(u*2)*8+(k-2)*1.8,-185+185*u,0]);}line(path,.3,false);}
-for(const side of [-1,1])for(let v=-1;v<=1.01;v+=.2){const path=[];for(let i=0;i<=24;i++){const u=i/24;path.push([side*(8+95*u),-115+53*u+17*Math.sin(Math.PI*u),Math.sin(Math.PI*u)*v*22]);}line(path,.22);}
-for(let layer=0;layer<2;layer++)for(let p=0;p<7;p++){const a=p*Math.PI*2/7+layer*.43;
-for(let j=0;j<=10;j++){const path=[];for(let i=0;i<=28;i++)path.push(petal(i/28,j/5-1,a,layer,open));line(path,layer?.32:.4);}
-for(let i=1;i<=22;i++){const path=[];for(let j=0;j<=18;j++)path.push(petal(i/22,j/9-1,a,layer,open));line(path,.22);}
+function point(x,y,z){const angle=.55+Math.sin(t*.1)*.12,xx=x*Math.cos(angle)+z*Math.sin(angle),zz=-x*Math.sin(angle)+z*Math.cos(angle),scale=Math.min(w/420,h/420);return [w*.70+(xx+y*.16)*scale,h*.64+(-y*.94+zz*.32)*scale];}
+function line(points,alpha=.25,gold=true){ctx.beginPath();points.forEach((p,i)=>{const q=point(...p);i?ctx.lineTo(...q):ctx.moveTo(...q);});ctx.strokeStyle=gold?'rgba(156,113,41,'+alpha+')':'rgba(88,87,67,'+alpha+')';ctx.lineWidth=.45;ctx.stroke();}
+function petal(u,v,a,inner,open){const len=inner?155:190,bend=(inner?.53:.95)*open;const radius=8+len*Math.pow(u,1.18)*bend;const broad=Math.pow(Math.sin(Math.PI*u),.8)*(inner?40:60);const side=v*broad;const y=8+len*(Math.sin(u*1.4)*(.92-.4*bend))+(v*v)*30*Math.sin(Math.PI*u)+18*Math.pow(u,8);const twist=.2*Math.sin(u*3+a);return [Math.cos(a+twist)*radius-Math.sin(a+twist)*side,y,Math.sin(a+twist)*radius+Math.cos(a+twist)*side];}
+function mist(){ctx.save();for(let k=0;k<3;k++){const origin=point(-12,100+k*24,0);const g=ctx.createRadialGradient(origin[0]-70-k*48,origin[1]+k*14,2,origin[0]-70-k*48,origin[1]+k*14,130);g.addColorStop(0,'rgba(220,182,107,.09)');g.addColorStop(1,'rgba(220,182,107,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);}
+for(let j=0;j<42;j++){const path=[];for(let i=0;i<=65;i++){const u=i/65;const flow=t*.3-u*5+j*.055;path.push([-10-u*370,100+Math.sin(flow)*24+u*70+(j-21)*.9,Math.cos(flow*.8)*23+j*.55]);}line(path,.045+.04*Math.sin(j/42*Math.PI));}ctx.restore();}
+function draw(){ctx.clearRect(0,0,w,h);mist();const open=.62+.22*(.5-.5*Math.cos(t*.28));
+for(let k=0;k<9;k++){const path=[];for(let i=0;i<=40;i++){const u=i/40;path.push([-20*(1-u)*(1-u)+(k-4)*.85,-210+218*u,0]);}line(path,.22,false);}
+const petals=[];for(let p=0;p<5;p++)petals.push({a:p*Math.PI*2/5,inner:false});for(let p=0;p<3;p++)petals.push({a:p*Math.PI*2/3+.55,inner:true});
+petals.sort((a,b)=>Math.sin(a.a)-Math.sin(b.a));
+for(const pet of petals){for(let j=0;j<=24;j++){const path=[];for(let i=0;i<=38;i++)path.push(petal(i/38,j/12-1,pet.a,pet.inner,open));line(path,pet.inner?.27:.24);}
+for(let i=1;i<=42;i++){const path=[];for(let j=0;j<=24;j++)path.push(petal(i/42,j/12-1,pet.a,pet.inner,open));line(path,.19);}
+for(const v of [-1,1]){const path=[];for(let i=0;i<=42;i++)path.push(petal(i/42,v,pet.a,pet.inner,open));line(path,.5);}
 }
-for(let i=0;i<22;i++){const a=i*2.4,r=Math.sqrt(i)*2.5;const q=point(Math.cos(a)*r,12+Math.sin(i)*3,Math.sin(a)*r);ctx.fillStyle='rgba(179,128,37,.65)';ctx.beginPath();ctx.arc(...q,1.2,0,Math.PI*2);ctx.fill();}
 }
 function size(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
 function tick(now){raf=0;t+=Math.min((now-last)/1000||0,.04);last=now;draw();schedule();}

@@ -25,12 +25,12 @@
 const root=document.querySelector('.projects-intro'),canvas=root.querySelector('.code-rain'),ctx=canvas.getContext('2d'),button=root.querySelector('.code-motion');
 if(!ctx){button.hidden=true;return;}
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-const glyphs='01{}[]();:=<>/$_+*constdefreturnSQLpython';
+const glyphs='01';
 let paused=reduced.matches,visible=true,width=0,height=0,streams=[],last=0,frame=0;
 let clock=0;
 function draw(){
 ctx.clearRect(0,0,width,height);
-ctx.font='500 16px ui-monospace,SFMono-Regular,Consolas,monospace';ctx.textAlign='center';
+ctx.font='600 17px ui-monospace,SFMono-Regular,Consolas,monospace';ctx.textAlign='center';
 streams.forEach((s,i)=>{for(let j=0;j<s.length;j++){
 const y=s.y-j*19;if(y<0||y>height)continue;
 const tail=1-j/s.length,glint=Math.pow(Math.max(0,Math.sin(clock*2.2-i*.43-j*.28)),10);
@@ -38,10 +38,10 @@ const alpha=.24+.65*Math.pow(tail,.65);
 const metallic=ctx.createLinearGradient(s.x-5,y-14,s.x+5,y+2);
 metallic.addColorStop(0,'rgba(124,79,12,'+alpha+')');
 metallic.addColorStop(.38,'rgba(207,154,37,'+alpha+')');
-metallic.addColorStop(.51,'rgba(255,239,160,'+Math.min(1,alpha+glint*.3)+')');
+metallic.addColorStop(.51,'rgba(231,185,66,'+Math.min(1,alpha+glint*.3)+')');
 metallic.addColorStop(.7,'rgba(186,126,17,'+alpha+')');
 metallic.addColorStop(1,'rgba(133,86,10,'+alpha+')');
-ctx.fillStyle=metallic;ctx.shadowColor='rgba(255,225,116,.85)';ctx.shadowBlur=j<2?8:glint*7;
+ctx.fillStyle=metallic;ctx.shadowColor='rgba(255,225,116,.85)';ctx.shadowBlur=j<2?2:glint*1.5;
 ctx.fillText(glyphs[(i*13+j*7+s.seed)%glyphs.length],s.x,y);
 }});ctx.shadowBlur=0;
 }

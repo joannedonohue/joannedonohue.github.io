@@ -1,38 +1,13 @@
-/* SRC-specific portfolio adaptation. Deterministic; no model or external API. */
-function screenDeal(d){
- const margin=d.netIncome==null?null:d.netIncome/d.revenue*100;
- const checks=[
-  {label:'Revenue',value:`$${(d.revenue/1e6).toFixed(2)}M · target $5–25M`,ok:d.revenue>=5e6&&d.revenue<=25e6},
-  {label:'EBITDA',value:`$${(d.ebitda/1e6).toFixed(2)}M · target $1–5M`,ok:d.ebitda>=1e6&&d.ebitda<=5e6},
-  {label:'Net margin',value:margin==null?'Net income missing · target >15%':`${margin.toFixed(1)}% · target >15%`,ok:margin==null?null:margin>15},
-  {label:'Geography',value:d.location+' · Southwest',ok:d.southwest}
- ];
- const missed=checks.some(x=>x.ok===false),missing=checks.some(x=>x.ok==null);
- const decision=missed?'Pass':missing?'Request data':'Advance to diligence';
- const flags=[];
- if(d.recurring<50)flags.push('Low recurring mix: below the demo’s 50% review threshold.');
- if(d.topCustomer>25)flags.push('Customer concentration: above the demo’s 25% review threshold.');
- if(d.transition==null)flags.push('Owner transition timeline is missing.');
- else if(d.transition<3||d.transition>12)flags.push('Owner transition falls outside the stated 3–12 month range.');
- return {name:d.name,decision,margin,checks,flags,classification:missed?'fail':missing?'unknown':'pass',next:d.next};
-}
-if(typeof module!=='undefined')module.exports={screenDeal};
-if(typeof document!=='undefined'){
- let deals=[];let current;
- const money=v=>v==null?'Unknown':'$'+(v/1e6).toFixed(2)+'M';
- const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- function render(){
-  const d=deals.find(x=>x.id===document.getElementById('deal').value);if(!d)return;
-  const r=screenDeal(d);current={d,r};
-  document.getElementById('results').innerHTML=`<div class="decision"><div><p class="eyebrow">${esc(d.sector)} / FICTIONAL DEAL</p><h3>${esc(d.name)}</h3><p>${esc(d.summary)}</p></div><span class="badge ${r.classification}">${r.decision}</span></div>
-  <div class="screen-grid"><div class="screen-box"><h3>What came in</h3><dl class="snapshot"><div><dt>Revenue</dt><dd>${money(d.revenue)}</dd></div><div><dt>EBITDA</dt><dd>${money(d.ebitda)}</dd></div><div><dt>Net income</dt><dd>${money(d.netIncome)}</dd></div><div><dt>Recurring revenue</dt><dd>${d.recurring}%</dd></div><div><dt>Largest customer</dt><dd>${d.topCustomer}%</dd></div><div><dt>Transition</dt><dd>${d.transition==null?'Unknown':d.transition+' months'}</dd></div></dl><p><strong>Customer niche:</strong> ${esc(d.niche)}</p><p><strong>Owner:</strong> ${esc(d.owner)}</p><p class="small">Synthetic annual financials, all for the same fictional fiscal year. Net income is after interest, depreciation, and taxes; it is not EBITDA.</p></div>
-  <div class="screen-box"><h3>Apply the published financial & location criteria</h3>${r.checks.map(c=>`<div class="check"><div><strong>${c.label}</strong><small>${c.value}</small></div><span class="badge ${c.ok==null?'unknown':c.ok?'pass':'fail'}">${c.ok==null?'? Missing':c.ok?'✓ Fits':'× Outside'}</span></div>`).join('')}<p class="small">${r.checks.filter(x=>x.ok===true).length} of 4 checks fit. This is a screening result, not a valuation or probability of success.</p></div>
-  <div class="screen-box"><h3>The qualitative questions</h3><p><strong>Defensibility:</strong> ${esc(d.moat)}</p><p><strong>People:</strong> ${esc(d.culture)}</p><p><strong>Seller alignment:</strong> ${esc(d.equity)}</p><p class="small">Treat resilience and a regulatory moat as hypotheses to test, not facts proven by an industry label.</p></div>
-  <div class="screen-box"><h3>What could change the answer?</h3>${r.flags.length?'<ul>'+r.flags.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>No numeric watch flags under the demo thresholds. Evidence still needs verification.</p>'}<ul>${d.risks.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div></div><div class="next-step"><strong>Next action / ${r.decision}</strong><p>${esc(d.next)}</p></div><button type="button" class="src-button" id="download-memo" style="margin-top:20px">Download this screening memo ↓</button>`;
-  document.getElementById('screen-status').textContent=`Screen complete: ${d.name}. ${r.decision}.`;
-  document.getElementById('download-memo').onclick=()=>{const text=['SRC PORTFOLIO DEMO | FICTIONAL DATA',d.name+' | '+d.sector,r.decision,'',d.summary,'',...r.checks.map(c=>c.label+': '+c.value+' | '+(c.ok==null?'Missing':c.ok?'Fits':'Outside')),'','DILIGENCE',...d.risks,'','NEXT ACTION',d.next,'','Source thesis: https://sonoranridgecapital.com/','Illustrative adaptation; not an official SRC underwriting model.'].join('\n');const url=URL.createObjectURL(new Blob([text],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download=d.id+'-screening-memo.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
- }
- document.getElementById('deal-form').onsubmit=e=>{e.preventDefault();render();};
- document.getElementById('deal').onchange=()=>{document.getElementById('results').innerHTML='';document.getElementById('screen-status').textContent='New opportunity selected. Screen this deal to inspect the result.';};
- fetch('assets/src-demo/deals.json').then(r=>{if(!r.ok)throw Error('data');return r.json();}).then(d=>{deals=d;render();}).catch(()=>{document.getElementById('screen-status').textContent='The sample could not load. Download the CSV below or refresh to try again.';});
-}
+/* Single-company process walkthrough. All records are synthetic. */
+(()=>{
+const steps=[
+ {title:'Find companies worth a conversation.',body:'I researched businesses and built a structured pipeline of potential opportunities. The first step was turning scattered company information into a record I could use again.',input:'Business directories and company research',output:'A company record with a source and reason to follow up',example:'PROJECT COPPER\nBusiness: Low-voltage technology integration\nOffering: Hardware + software configuration + support\nNext step: Identify the right owner contact'},
+ {title:'Clean the list before it becomes outreach.',body:'I used Google Colab and Python to organize research, remove duplicate records, and support email validation before outreach. A cleaner list made the CRM more useful and reduced avoidable bounce risk.',input:'Company and contact records',output:'A deduplicated record ready for review and CRM tracking',example:'SYNTHETIC CONTACT CHECK\nDuplicate entries → merged\nContact fields → standardized\nEmail verification → checked before outreach\nOwner contact details → omitted from this demo'},
+ {title:'Turn a record into a relationship.',body:'I used Attio to track outreach, replies, follow-ups, and where each opportunity stood. Once an owner was interested, the next step was a conversation and a request for the information needed to evaluate the business.',input:'Reviewed contact record and research context',output:'An interested-owner conversation and information request',example:'ILLUSTRATIVE PIPELINE\nResearched → Contact reviewed → Outreach\n→ Owner response → Introductory call\n→ Information requested\n\nNo messages are sent from this demo.'},
+ {title:'Make the first screen repeatable.',body:'I structured incoming company data so Python could apply our screening logic consistently. The screener used weighted criteria to produce a standard summary, making the reasoning easier to inspect and rerun.',input:'Company information organized into a consistent CSV format',output:'A calculated screen with the inputs and assumptions visible',example:'ILLUSTRATIVE MATH\nWeighted score = Σ(criterion score × weight)\n\nExample inputs: 8, 6, 7 out of 10\nExample weights: 40%, 35%, 25%\nResult: (8×.40 + 6×.35 + 7×.25) × 10\n      = 70.5 / 100\n\nDemo arithmetic only, not a real deal rating.'},
+ {title:'Bring better questions to the next call.',body:'The useful output was a concise review I could act on: what we knew, what needed clarification, and what to ask next. That reduced the repeated work around each opportunity and kept my attention on the conversation.',input:'Screening output and open questions',output:'A focused follow-up and an updated pipeline record',example:'PROJECT COPPER / SAMPLE FOLLOW-UP\n• Clarify service contracts vs. one-time projects.\n• Understand vendor software dependencies.\n• Confirm who owns technical delivery.\n\nNext action: Review the questions with the owner.'}
+];
+const target=document.getElementById('workflow-detail');
+function show(i){const s=steps[i];document.querySelectorAll('[data-step]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.step)===i)));target.innerHTML=`<div class="step-story"><p class="eyebrow">STEP ${i+1} OF 5</p><h3>${s.title}</h3><p>${s.body}</p><dl><dt>Input</dt><dd>${s.input}</dd><dt>Output</dt><dd>${s.output}</dd></dl></div><div class="step-example"><span class="example-label">ONE FICTIONAL COMPANY / PROCESS EXAMPLE</span><pre></pre></div>`;target.querySelector('pre').textContent=s.example;}
+document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.step))));show(0);
+})();

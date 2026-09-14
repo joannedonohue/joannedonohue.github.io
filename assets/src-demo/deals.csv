@@ -1,4 +1,2 @@
-id,name,sector,location,revenue,ebitda,netIncome,recurring,topCustomer,transition
-copper,Project Copper,Low-voltage systems integration,Southwest U.S.,8400000,1920000,1428000,56,11,9
-arroyo,Project Arroyo,Smart-building controls & analytics,"Tucson, AZ",6100000,1180000,,68,34,
-mesa,Project Mesa,AV hardware & systems integration,"Las Vegas, NV",12400000,1300000,868000,12,29,2
+id,name,type,record_status
+copper,Project Copper,Low-voltage systems integrator,Synthetic workflow example

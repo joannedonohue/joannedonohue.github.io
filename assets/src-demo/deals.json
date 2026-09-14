@@ -2,78 +2,14 @@
   {
     "id": "copper",
     "name": "Project Copper",
-    "sector": "Low-voltage systems integration",
-    "location": "Southwest U.S.",
-    "southwest": true,
-    "revenue": 8400000,
-    "ebitda": 1920000,
-    "netIncome": 1428000,
-    "recurring": 56,
-    "topCustomer": 11,
-    "transition": 9,
-    "owner": "Founder plans to step back; engineering and service leads expected to remain",
-    "niche": "Integrated communications, access-control hardware, and facility system software for institutional and commercial buildings",
-    "moat": "Seller claims integration expertise, installed-system knowledge, and service relationships. Verify vendor certifications, license transfer rights, and customer switching costs.",
-    "culture": "Engineering-lead retention and field-service coverage remain unverified.",
-    "equity": "Seller open to a minority rollover; terms unconfirmed.",
-    "summary": "A fictional systems integrator combining communications and access-control hardware, third-party software configuration, installation, and ongoing support. The sample financials fit the published ranges; the quality of recurring service revenue still needs proof.",
-    "risks": [
-      "Validate the sample revenue mix: 44% hardware and installation, 32% contracted maintenance, and 24% managed monitoring and software support. Separate contracted revenue from repeat projects.",
-      "Review manufacturer and software-reseller agreements, certification renewals, and change-of-control provisions. This is an integrator, not assumed proprietary SaaS.",
-      "Reconcile EBITDA and net income; test project cost estimates, work in progress, warranty reserves, and cash collection milestones.",
-      "Verify backlog conversion and cancellation rights. Backlog is not recurring revenue.",
-      "Confirm key-engineer retention, administrator access controls, remote-support security, and customer handover plans."
-    ],
-    "next": "Schedule an owner and engineering-lead call. Request service contracts, the project-margin ledger, backlog aging, vendor agreements, and a management retention plan."
-  },
-  {
-    "id": "arroyo",
-    "name": "Project Arroyo",
-    "sector": "Smart-building controls & analytics",
-    "location": "Tucson, AZ",
-    "southwest": true,
-    "revenue": 6100000,
-    "ebitda": 1180000,
-    "netIncome": null,
-    "recurring": 68,
-    "topCustomer": 34,
-    "transition": null,
-    "owner": "Owner wants to step back; handover timing not provided",
-    "niche": "Connected meters, building-control integrations, and energy dashboards for commercial facilities",
-    "moat": "Seller claims integration expertise; verify proprietary code ownership versus third-party resale.",
-    "culture": "Owner appears to lead sales; management depth is unknown.",
-    "equity": "Rollover preference not supplied.",
-    "summary": "Revenue and EBITDA fit, but missing net income prevents a margin decision. Customer concentration adds a separate diligence concern.",
-    "risks": [
-      "Obtain net income and margin by hardware, integration services, and software.",
-      "Review the largest customer contract, representing 34% of revenue.",
-      "Confirm software licensing, key integrator retention, and support obligations."
-    ],
-    "next": "Request the missing financials and transition plan before advancing the deal."
-  },
-  {
-    "id": "mesa",
-    "name": "Project Mesa",
-    "sector": "AV hardware & systems integration",
-    "location": "Las Vegas, NV",
-    "southwest": true,
-    "revenue": 12400000,
-    "ebitda": 1300000,
-    "netIncome": 868000,
-    "recurring": 12,
-    "topCustomer": 29,
-    "transition": 2,
-    "owner": "Founder seeks a short exit with limited ongoing involvement",
-    "niche": "Project-based audiovisual hardware installations with limited managed-service revenue",
-    "moat": "Hardware resale and installation, with limited evidence of proprietary software or recurring contracts.",
-    "culture": "Key estimator and project leads have no documented retention plan.",
-    "equity": "Seller requests a full cash exit.",
-    "summary": "The company fits the size ranges, but the 7% net margin is below the published threshold. Low recurring revenue and a two-month handover weaken the fit.",
-    "risks": [
-      "Most revenue depends on new hardware installations rather than subscriptions.",
-      "Net margin falls below the published requirement.",
-      "The seller\u2019s transition is shorter than SRC\u2019s stated range."
-    ],
-    "next": "Pass under this demonstration\u2019s rules. Revisit only if verified economics or the mandate change."
+    "type": "Fictional low-voltage systems integrator",
+    "recordStatus": "Synthetic workflow example",
+    "process": [
+      "Source",
+      "Prepare",
+      "Reach out",
+      "Evaluate",
+      "Act"
+    ]
   }
 ]

@@ -2,7 +2,10 @@ const motionButton = document.querySelector('#motion');
 let paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function setMotion() {
   document.documentElement.classList.toggle('paused', paused);
-  motionButton.textContent = paused ? 'Motion paused ▶' : 'Pause motion Ⅱ';
+  motionButton.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="' + (paused ? 'M4 2l10 6-10 6z' : 'M4 2h3v12H4zM9 2h3v12H9z') + '"/></svg>';
+  const label = paused ? 'Play animation' : 'Pause animation';
+  motionButton.setAttribute('aria-label', label);
+  motionButton.title = label;
   motionButton.setAttribute('aria-pressed', String(paused));
 }
 motionButton.addEventListener('click', () => { paused = !paused; setMotion(); });

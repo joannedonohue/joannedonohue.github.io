@@ -14,6 +14,6 @@ ps.forEach((p,i)=>{const h=heat(p.u);if(h>.34&&i%3===0){ctx.fillStyle=`rgba(243,
 for(let i=0;i<42;i++){const life=(time*.35+i*.618)%1,angle=time*.52+(i%2)*2.8;const origin=project({u:angle,v:(i*.91)%(Math.PI*2)});const x=origin.x+Math.sin(i*9.1+life*4)*life*20,y=origin.y-life*62;const alpha=Math.sin(life*Math.PI)*.65;ctx.fillStyle=`rgba(218,${125+i%70},29,${alpha})`;ctx.beginPath();ctx.arc(x,y,.6+(i%3)*.3,0,Math.PI*2);ctx.fill();}
 }
 function tick(now){if(!last)last=now;if(!paused&&!document.hidden)time+=Math.min((now-last)/1000,.04);last=now;if(!paused)draw();raf=requestAnimationFrame(tick);}
-function sync(){button.textContent=paused?'Play motion':'Pause motion';button.setAttribute('aria-pressed',String(paused));}
+function sync(){button.innerHTML='<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="'+(paused?'M4 2l10 6-10 6z':'M4 2h3v12H4zM9 2h3v12H9z')+'"/></svg>';button.setAttribute('aria-label',paused?'Play animation':'Pause animation');button.title=paused?'Play animation':'Pause animation';button.setAttribute('aria-pressed',String(paused));}
 button.addEventListener('click',()=>{paused=!paused;sync();draw();});reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});new ResizeObserver(size).observe(canvas);sync();size();raf=requestAnimationFrame(tick);
 })();

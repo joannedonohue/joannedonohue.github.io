@@ -1,0 +1,53 @@
+(() => {
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const names=['Amazon','Walmart','Chewy','Kroger','Target'];
+  const series=[0.9,0.96,0.92,1.02,1.11,1.06,1.14,1.08,1.19,1.16,1.25,1.21];
+  const base=[360000,275000,210000,150000,185000];
+  const rows=names.flatMap((retailer,j)=>series.map((factor,w)=>{
+    const sales=Math.round(base[j]*factor*(1+j*0.025));
+    const units=Math.round(sales/(23+j*2));
+    const spend=Math.round(sales*(0.1+j*0.006));
+    const attributed=Math.round(spend*(3.6-j*0.23+(w%3)*0.13));
+    const impressions=Math.round(spend/(9+j)*1000);
+    const clicks=Math.round(impressions*(0.0065+j*0.0004+(w%3)*0.0001));
+    const orders=Math.round(clicks*(0.105+j*0.003));
+    const eligible=100+j*20;
+    const stocked=Math.round(eligible*(0.96-j*0.014-((w+j)%4)*0.007));
+    const compliant=Math.round(eligible*(0.93+j*0.005));
+    return {retailer,w,sales,units,spend,attributed,impressions,clicks,orders,eligible,stocked,compliant,prior:Math.round(sales/(1.08+j*0.012+(w%3)*0.006)),onHand:Math.round(units*(3.1+j*0.5)),buyBox:j===0?Math.round(eligible*(0.93+(w%3)*0.01)):0};
+  }));
+  const sum=(rs,k)=>rs.reduce((a,r)=>a+r[k],0);
+  const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',notation:'compact',maximumFractionDigits:2}).format(n);
+  const num=n=>new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n);
+  const rate=(n,d)=>d?(100*n/d).toFixed(1)+'%':'N/A';
+  const date=w=>new Date(Date.UTC(2026,5,29+w*7)).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+  const line=(label,value)=>`<div class="rbs-line"><span>${label}</span><strong>${value}</strong></div>`;
+  const meter=(label,n,d,color)=>`<div class="rbs-meter" style="--accent:${color}"><div><span>${label}</span><strong>${rate(n,d)}</strong></div><div class="rbs-track" aria-hidden="true"><span style="width:${d?n/d*100:0}%"></span></div></div>`;
+  function render(){
+    const retailer=$('rbs-retailer').value,weeks=Number($('rbs-period').value);
+    const rs=rows.filter(r=>(retailer==='all'||r.retailer===retailer)&&r.w>=12-weeks);
+    const sales=sum(rs,'sales'),prior=sum(rs,'prior'),spend=sum(rs,'spend'),attributed=sum(rs,'attributed'),eligible=sum(rs,'eligible'),stocked=sum(rs,'stocked');
+    const weekly=Array.from({length:weeks},(_,i)=>{const w=12-weeks+i,wr=rs.filter(r=>r.w===w);return {w,sales:sum(wr,'sales'),prior:sum(wr,'prior')};});
+    const coverage=sum(rs.filter(r=>r.w===11),'onHand')/(sum(rs,'units')/weeks);
+    $('rbs-status').textContent=`${retailer==='all'?'Five retailers':retailer} • ${date(12-weeks)}–${date(11)}, 2026 • ${weeks} weeks • Synthetic demo data`;
+    const kpis=[['Retail sales',money(sales),`+${((sales/prior-1)*100).toFixed(1)}% vs prior year`,'#a92f55'],['Units sold',num(sum(rs,'units')),'Retailer sell-through units','#437aaf'],['Media spend',money(spend),'Selected period total','#b66a30'],['Attributed ROAS',(attributed/spend).toFixed(2)+'×','Attributed sales ÷ spend','#6a63a8'],['In-stock rate',rate(stocked,eligible),'Eligible SKU-week observations','#288160'],['Click-through rate',rate(sum(rs,'clicks'),sum(rs,'impressions')),'Clicks ÷ impressions','#437aaf'],['Media conversion',rate(sum(rs,'orders'),sum(rs,'clicks')),'Attributed orders ÷ clicks','#a92f55'],['Weeks of cover',coverage.toFixed(1),'On hand ÷ weekly units sold','#b66a30']];
+    $('rbs-kpis').innerHTML=kpis.map(([label,value,note,color])=>`<div class="rbs-kpi" style="--accent:${color}"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
+    const W=650,H=250,pad={l:54,r:20,t:15,b:42},max=Math.ceil(Math.max(...weekly.map(r=>r.sales))/250000)*250000;
+    const x=i=>pad.l+i/(weeks-1)*(W-pad.l-pad.r),y=n=>H-pad.b-n/max*(H-pad.t-pad.b);
+    const points=k=>weekly.map((r,i)=>`${x(i)},${y(r[k])}`).join(' ');
+    const grid=Array.from({length:5},(_,i)=>{const v=max*i/4;return `<line x1="${pad.l}" y1="${y(v)}" x2="${W-pad.r}" y2="${y(v)}" stroke="#e2e6eb"/><text x="${pad.l-10}" y="${y(v)+5}" text-anchor="end" fill="#596171" font-size="14">${(v/1e6).toFixed(2)}</text>`;}).join('');
+    const labels=weekly.map((r,i)=>i===0||i===weeks-1||i===Math.floor((weeks-1)/2)?`<text x="${x(i)}" y="${H-12}" text-anchor="${i===0?'start':i===weeks-1?'end':'middle'}" fill="#596171" font-size="14">${date(r.w)}</text>`:'').join('');
+    $('rbs-sales-chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Weekly synthetic sales compared with prior-year equivalent; numerical values are available in the data table below.">${grid}<polyline points="${points('prior')}" fill="none" stroke="#65748a" stroke-width="2" stroke-dasharray="6 5"/><polyline points="${points('sales')}" fill="none" stroke="#a92f55" stroke-width="3"/>${weekly.map((r,i)=>`<circle cx="${x(i)}" cy="${y(r.sales)}" r="3" fill="#a92f55"/>`).join('')}${labels}</svg><details class="rbs-sales-detail"><summary>View weekly sales data</summary><table class="dash-table"><thead><tr><th scope="col">Week ending</th><th scope="col">Sales</th><th scope="col">Prior year</th></tr></thead><tbody>${weekly.map(r=>`<tr><th scope="row">${date(r.w)}</th><td>${money(r.sales)}</td><td>${money(r.prior)}</td></tr>`).join('')}</tbody></table></details>`;
+    $('rbs-media').innerHTML=line('Attributed sales',money(attributed))+line('Impressions',num(sum(rs,'impressions')))+line('Clicks',num(sum(rs,'clicks')))+line('Cost per click',money(spend/sum(rs,'clicks')))+line('Attributed orders',num(sum(rs,'orders')));
+    const amazon=rs.filter(r=>r.retailer==='Amazon');
+    $('rbs-shelf').innerHTML=meter('In-stock',stocked,eligible,'#288160')+meter('Content compliance',sum(rs,'compliant'),eligible,'#437aaf')+(amazon.length?meter('Amazon Buy Box',sum(amazon,'buyBox'),sum(amazon,'eligible'),'#a92f55'):'<p class="dash-note">Buy Box is only modeled for Amazon in this demo.</p>');
+    $('rbs-inventory').innerHTML=`<div class="rbs-coverage">${coverage.toFixed(1)}<span>weeks of cover</span></div>`+line('Latest on-hand units',num(sum(rs.filter(r=>r.w===11),'onHand')))+line('Weekly unit demand',num(sum(rs,'units')/weeks))+line('Illustrative target','4–6 weeks');
+    const retailers=names.filter(n=>retailer==='all'||n===retailer);
+    $('rbs-retailer-table').innerHTML=retailers.map(n=>{const rr=rs.filter(r=>r.retailer===n);return `<tr><th scope="row">${n}</th><td>${money(sum(rr,'sales'))}</td><td>+${((sum(rr,'sales')/sum(rr,'prior')-1)*100).toFixed(1)}%</td><td>${money(sum(rr,'spend'))}</td><td>${(sum(rr,'attributed')/sum(rr,'spend')).toFixed(2)}×</td><td>${rate(sum(rr,'stocked'),sum(rr,'eligible'))}</td></tr>`;}).join('');
+    const worst=retailers.map(n=>{const rr=rs.filter(r=>r.retailer===n);return {name:n,rate:sum(rr,'stocked')/sum(rr,'eligible')};}).sort((a,b)=>a.rate-b.rate)[0];
+    $('rbs-action').textContent=`${worst.name} has ${rate(worst.rate,1)} in-stock availability in this sample. I would inspect the affected SKUs and replenishment timing alongside media activity before increasing spend. ${coverage<4?'Coverage is also below the illustrative four-week floor.':'Aggregate coverage is within the illustrative four-to-six-week band.'}`;
+  }
+  $('rbs-retailer').addEventListener('change',render);$('rbs-period').addEventListener('change',render);
+  $('rbs-reset').addEventListener('click',()=>{$('rbs-retailer').value='all';$('rbs-period').value='12';render();});render();
+})();

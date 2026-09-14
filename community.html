@@ -1,6 +1,14 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Community | Joanne Donohue</title><link rel="stylesheet" href="style.css?v=20260908-clean"><meta name="description" content="Animal care volunteering at Southwest Wildlife Conservation Center and five years of involvement with EO Arizona. Community beyond the screen."><link rel="stylesheet" href="community.css?v=20260914"><link rel="stylesheet" href="site-navigation.css?v=20260914-projects"></head><body class="inner-page community-page"><a class="skip" href="#main">Skip to content</a><header class="nav"><a class="brand" href="index.html" aria-label="Joanne Donohue home">Joanne Donohue</a><div class="nav-capsule glass"><nav aria-label="Main navigation"><a href="product.html">Product Work</a><a href="projects.html">Projects</a><a href="community.html" aria-current="page">Community Involvement</a></nav><div class="social"><a href="https://www.linkedin.com/in/joannendonohue/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/joannedonohue" target="_blank" rel="noopener">GitHub ↗</a></div></div></header>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Community | Joanne Donohue</title><link rel="stylesheet" href="style.css?v=20260908-clean"><meta name="description" content="Animal care volunteering at Southwest Wildlife Conservation Center and five years of involvement with EO Arizona. Community beyond the screen."><link rel="stylesheet" href="community.css?v=20260914"><link rel="stylesheet" href="site-navigation.css?v=20260914-projects"><style>
+.community-intro{background:#c8daaa;position:relative;isolation:isolate;overflow:hidden}
+.community-intro>:not(canvas){position:relative;z-index:1}
+.community-intro h1{ text-shadow:0 0 18px #c8daaa,0 0 8px #c8daaa}
+.community-intro .bloom-canvas{position:absolute;right:0;top:0;width:52%;height:100%;pointer-events:none;mask-image:linear-gradient(to right,transparent,#000 26%);-webkit-mask-image:linear-gradient(to right,transparent,#000 26%)}
+.community-intro .bloom-motion{position:absolute;right:6%;bottom:20px;width:38px;height:38px;display:grid;place-items:center;border:1px solid #554a3838;border-radius:50%;background:transparent;color:#514636;cursor:pointer}
+.bloom-motion:hover{background:#ffffff38}.bloom-motion:focus-visible{outline:2px solid #796023;outline-offset:4px}
+@media(max-width:650px){.community-intro .bloom-canvas{width:100%;opacity:.38;right:-16%}}
+</style></head><body class="inner-page community-page"><a class="skip" href="#main">Skip to content</a><header class="nav"><a class="brand" href="index.html" aria-label="Joanne Donohue home">Joanne Donohue</a><div class="nav-capsule glass"><nav aria-label="Main navigation"><a href="product.html">Product Work</a><a href="projects.html">Projects</a><a href="community.html" aria-current="page">Community Involvement</a></nav><div class="social"><a href="https://www.linkedin.com/in/joannendonohue/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/joannedonohue" target="_blank" rel="noopener">GitHub ↗</a></div></div></header>
 <main id="main">
-<section class="section inner-intro community-intro">
+<section class="section inner-intro community-intro"><canvas class="bloom-canvas" aria-hidden="true"></canvas><button class="bloom-motion" type="button" aria-label="Pause flower animation" title="Pause animation" aria-pressed="false"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 2h3v12H4zM9 2h3v12H9z"/></svg></button>
 <a class="text-link" href="index.html#work">← Back to the whole picture</a>
 <p class="eyebrow">03 / COMMUNITY</p>
 <h1>Good work happens<br><em>offline, too.</em></h1>
@@ -44,4 +52,26 @@
 </div>
 </div>
 </section>
-</main><footer class="inner-footer"><a href="index.html">Joanne Donohue</a><a href="https://www.linkedin.com/in/joannendonohue/">Let’s connect ↗</a></footer></body></html>
+</main><footer class="inner-footer"><a href="index.html">Joanne Donohue</a><a href="https://www.linkedin.com/in/joannendonohue/">Let’s connect ↗</a></footer><script>
+(()=>{
+const root=document.querySelector('.community-intro'),canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d'),button=root.querySelector('.bloom-motion');
+if(!ctx){button.hidden=true;return;}
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');let paused=reduced.matches,visible=true,w=1,h=1,t=5,last=0,raf=0;
+function point(x,y,z){const angle=.28+Math.sin(t*.12)*.12,xx=x*Math.cos(angle)+z*Math.sin(angle),zz=-x*Math.sin(angle)+z*Math.cos(angle),scale=Math.min(w/440,h/440);return [w*.58+xx*scale,h*.57+(-y*.86+zz*.5)*scale];}
+function line(points,alpha=.36,gold=true){ctx.beginPath();points.forEach((p,i)=>{const q=point(...p);i?ctx.lineTo(...q):ctx.moveTo(...q);});ctx.strokeStyle=gold?'rgba(161,116,40,'+alpha+')':'rgba(78,83,62,'+alpha+')';ctx.lineWidth=.65;ctx.stroke();}
+function petal(u,v,a,layer,open){const len=layer?133:165,bend=(layer?.72:1)*open;const r=10+len*(Math.sin(u*bend*1.5))*.95,side=Math.sin(Math.PI*u)*Math.sin(v*Math.PI/2)*(layer?36:49);const y=6+len*u*(1-.64*bend)+28*Math.sin(Math.PI*u)-Math.pow(Math.abs(v),2)*18*Math.sin(Math.PI*u);return [Math.cos(a)*r-Math.sin(a)*side,y,Math.sin(a)*r+Math.cos(a)*side];}
+function draw(){ctx.clearRect(0,0,w,h);const open=.2+.8*(.5-.5*Math.cos(t*.38));for(let k=0;k<5;k++){const path=[];for(let i=0;i<=30;i++){const u=i/30;path.push([Math.sin(u*2)*8+(k-2)*1.8,-185+185*u,0]);}line(path,.3,false);}
+for(const side of [-1,1])for(let v=-1;v<=1.01;v+=.2){const path=[];for(let i=0;i<=24;i++){const u=i/24;path.push([side*(8+95*u),-115+53*u+17*Math.sin(Math.PI*u),Math.sin(Math.PI*u)*v*22]);}line(path,.22);}
+for(let layer=0;layer<2;layer++)for(let p=0;p<7;p++){const a=p*Math.PI*2/7+layer*.43;
+for(let j=0;j<=10;j++){const path=[];for(let i=0;i<=28;i++)path.push(petal(i/28,j/5-1,a,layer,open));line(path,layer?.32:.4);}
+for(let i=1;i<=22;i++){const path=[];for(let j=0;j<=18;j++)path.push(petal(i/22,j/9-1,a,layer,open));line(path,.22);}
+}
+for(let i=0;i<22;i++){const a=i*2.4,r=Math.sqrt(i)*2.5;const q=point(Math.cos(a)*r,12+Math.sin(i)*3,Math.sin(a)*r);ctx.fillStyle='rgba(179,128,37,.65)';ctx.beginPath();ctx.arc(...q,1.2,0,Math.PI*2);ctx.fill();}
+}
+function size(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
+function tick(now){raf=0;t+=Math.min((now-last)/1000||0,.04);last=now;draw();schedule();}
+function schedule(){if(!paused&&visible&&!document.hidden&&!raf){last=performance.now();raf=requestAnimationFrame(tick);}}
+function sync(){button.setAttribute('aria-label',paused?'Play flower animation':'Pause flower animation');button.title=paused?'Play animation':'Pause animation';button.setAttribute('aria-pressed',String(paused));button.querySelector('path').setAttribute('d',paused?'M4 2l10 6-10 6z':'M4 2h3v12H4zM9 2h3v12H9z');if(raf){cancelAnimationFrame(raf);raf=0;}schedule();}
+button.addEventListener('click',()=>{paused=!paused;sync();});reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});document.addEventListener('visibilitychange',sync);new IntersectionObserver(e=>{visible=e[0].isIntersecting;sync();}).observe(root);new ResizeObserver(size).observe(root);size();sync();
+})();
+</script></body></html>

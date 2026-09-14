@@ -45,7 +45,7 @@ for(let j=0;j<stream.length;j++){
 const y=stream.y-j*19;if(y < -12 || y>height+20)continue;
 const digit=(i*13+j*7+stream.seed)%2,alpha=stream.alpha[j];
 ctx.globalAlpha=alpha;ctx.drawImage(sprites[digit][0],stream.x-14,y-23,28,32);
-const glint=Math.pow(Math.max(0,Math.sin(clock*2.2-i*.43-j*.28)),10);
+const glint=Math.pow(Math.max(0,Math.sin(clock*1.43-i*.43-j*.28)),10);
 if(glint>.06||j<2){ctx.globalAlpha=alpha*(j<2?.65:glint*.75);ctx.drawImage(sprites[digit][1],stream.x-14,y-23,28,32);}
 }}ctx.globalAlpha=1;
 }
@@ -56,7 +56,7 @@ const oldHeight=height;width=box.width;height=box.height;
 canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);prepareDigits(dpr);
 streams=Array.from({length:Math.ceil(width/19)},(_,i)=>{
 const previous=streams[i],length=25+i%19;
-return {x:i*19+9,y:previous?previous.y*(height/oldHeight):((i*.6180339)%1)*(height+550),speed:95+(i*17%70),length,seed:previous?previous.seed:i*11,alpha:Array.from({length},(_,j)=>.24+.65*Math.pow(1-j/length,.65))};
+return {x:i*19+9,y:previous?previous.y*(height/oldHeight):((i*.6180339)%1)*(height+550),speed:(95+(i*17%70))*.65,length,seed:previous?previous.seed:i*11,alpha:Array.from({length},(_,j)=>.24+.65*Math.pow(1-j/length,.65))};
 });draw();
 }
 function tick(now){

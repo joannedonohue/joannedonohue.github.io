@@ -1,11 +1,23 @@
-/* Portrait beside the three homepage navigation cards. */
+/* Floral bloom tile beside the homepage navigation cards. */
 .home-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;overflow:visible;padding:4px 0 0;align-items:stretch}
 .home-feature-grid .feature-card{min-width:0;min-height:510px;padding:28px}
 .home-feature-grid .feature-type{font-size:clamp(38px,3.4vw,64px);letter-spacing:-.055em}
 .home-feature-grid .feature-type em{font-size:clamp(46px,4vw,76px)}
 .home-feature-grid .feature-footer{gap:12px}
 .home-feature-grid .feature-footer h3{font-size:clamp(20px,1.4vw,25px)}
-.home-portrait{position:relative;min-width:0;margin:0;border-radius:24px;overflow:hidden;background:#671c17}
-.home-portrait img{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center}
-@media(max-width:1200px){.home-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-feature-grid .feature-type{font-size:54px}.home-feature-grid .feature-type em{font-size:66px}.home-portrait{min-height:510px}}
-@media(max-width:600px){.home-feature-grid{grid-template-columns:minmax(0,1fr);gap:20px}.home-feature-grid .feature-card{min-height:420px;padding:24px}.home-feature-grid .feature-type{font-size:52px}.home-feature-grid .feature-type em{font-size:64px}.home-portrait{min-height:0;aspect-ratio:1122/1402}.home-portrait img{position:static;height:auto}}
+
+.home-bloom{position:relative;min-width:0;margin:0;border-radius:24px;overflow:hidden;background:#e9a7b0}
+.bloom-frames{position:absolute;inset:0;overflow:hidden}
+.bloom-stage{position:absolute;inset:0;background-image:url('assets/floral-bloom-stages.webp');background-size:200% 200%;background-repeat:no-repeat;animation-duration:20s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.bloom-one{background-position:0 0}
+.bloom-two{background-position:100% 0;opacity:0;animation-name:bloomSecond}
+.bloom-three{background-position:0 100%;opacity:0;animation-name:bloomThird}
+.bloom-four{background-position:100% 100%;opacity:0;animation-name:bloomFourth}
+@keyframes bloomSecond{0%,8%,100%{opacity:0}22%,85%{opacity:1}}
+@keyframes bloomThird{0%,24%,89%,100%{opacity:0}39%,74%{opacity:1}}
+@keyframes bloomFourth{0%,41%,77%,100%{opacity:0}56%,65%{opacity:1}}
+#bloom-motion{position:absolute;right:14px;bottom:14px;z-index:2;width:36px;height:36px;display:grid;place-items:center;padding:0;border-radius:50%;border:1px solid #fff8;background:#fff7;color:#39292b;cursor:pointer;backdrop-filter:blur(8px)}
+#bloom-motion:hover{background:#fffb}
+@media(max-width:1200px){.home-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-feature-grid .feature-type{font-size:54px}.home-feature-grid .feature-type em{font-size:66px}.home-bloom{min-height:510px}}
+@media(max-width:600px){.home-feature-grid{grid-template-columns:minmax(0,1fr);gap:20px}.home-feature-grid .feature-card{min-height:420px;padding:24px}.home-feature-grid .feature-type{font-size:52px}.home-feature-grid .feature-type em{font-size:64px}.home-bloom{min-height:0;aspect-ratio:4/5}}
+@media(prefers-reduced-motion:reduce){.bloom-stage{animation:none}.bloom-four{opacity:1}#bloom-motion{display:none}}
